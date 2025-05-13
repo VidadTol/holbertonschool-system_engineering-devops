@@ -1,4 +1,9 @@
 
+### Simple web stack
+
+![Simple web stack](0-simple_web_stack.png)
+
+
 ## **Explanation of Components**
 
 - **What is a server ?**   
