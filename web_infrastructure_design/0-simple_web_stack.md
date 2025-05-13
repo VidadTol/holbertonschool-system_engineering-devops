@@ -1,7 +1,5 @@
 
-### Simple web stack
-
-![Simple web stack](0-simple_web_stack.png)
+![Simple web stack](simple-web-stack.png)
 
 
 ## **Explanation of Components**
