@@ -1,52 +1,59 @@
-
 ![web_infrastructure_design](Secured-and-monitored-web-infrastructure.png)
 
+### **Explanation of Additional Elements**
 
-### **Explication des éléments supplémentaires**
+**Why add firewalls?**
+Firewalls allow you to:
 
-**Pourquoi ajouter des firewalls ?**    
-  Les firewalls permettent de :
+- Restrict unauthorized access to servers.
+- Filter inbound and outbound traffic according to security rules.
+- Protect against attacks such as DDoS, brute force, and intrusions.
 
--   Restreindre l’accès non autorisé aux serveurs.
--   Filtrer le trafic entrant et sortant selon des règles de sécurité.
--   Protéger contre les attaques telles que DDoS, brute force et intrusions.
+**Why serve traffic over HTTPS?**  
+HTTPS encrypts data exchanged between the user and the server, guaranteeing:
 
-**Pourquoi servir le trafic en HTTPS ?**   
-HTTPS chiffre les données échangées entre l’utilisateur et le serveur, garantissant :
+- **Confidentiality**: 
+  - Data cannot be intercepted or read by attackers.
+- **Integrity**: 
+  - Information cannot be altered during transmission.
+- **Authentication**: 
+  - Users can verify the identity of the server.
 
--   **Confidentialité** : les données ne peuvent pas être interceptées ou lues par des attaquants.
--   **Intégrité** : les informations ne peuvent pas être altérées lors de la transmission.
--   **Authentification** : les utilisateurs peuvent vérifier l’identité du serveur.
+**Why add monitoring clients?**  
+Monitoring agents collect data to:
 
-**Pourquoi ajouter des clients de monitoring ?**   
-Les agents de monitoring collectent des données pour :
+- Track server performance (CPU, memory, disk usage).
+- Detect and resolve issues such as traffic spikes or outages.
+- Provide analytics to optimize and scale infrastructure.
 
--   Suivre la performance des serveurs (CPU, mémoire, utilisation du disque).
--   Détecter et résoudre les problèmes comme les pics de trafic ou les pannes.
--   Offrir des analyses pour optimiser et faire évoluer l’infrastructure.
+**How ​​does the monitoring tool collect data?**
+Monitoring agents (e.g., Sumologic) collect server metrics and send them to a centralized service. This data is then displayed on dashboards for analysis.
 
-**Comment l’outil de monitoring collecte-t-il les données ?**  
-Les agents de monitoring (ex. Sumologic) recueillent des métriques des serveurs et les envoient à un service centralisé. Ces données sont ensuite affichées sur des tableaux de bord pour analyse.
+**How ​​do I monitor a web server's QPS (Queries Per Second)?**
 
-**Comment surveiller le QPS (Queries Per Second) d’un serveur web ?**
+- Use monitoring tools to track the number of queries processed per second.
+- Set up alerts in case of abnormal variations in QPS.
+- Analyze trends to optimize server performance and scalability.
 
--   Utiliser des outils de monitoring pour suivre le nombre de requêtes traitées par seconde.
--   Mettre en place des alertes en cas de variations anormales du QPS.
--   Analyser les tendances pour optimiser la performance et l’évolutivité du serveur.
+### **Issues in this infrastructure**
 
-### **Problèmes dans cette infrastructure**
+**Terminate SSL at the Load Balancer**
 
-**Terminer SSL au niveau du Load Balancer**
+- **Issue**: 
+  - If SSL is stopped at the load balancer, traffic between it and the web servers is unencrypted, increasing the risk of attacks.
+- **Solution**:
+  - Enable end-to-end encryption by configuring SSL on the web servers.
 
--   **Problème** : Si le SSL est stoppé au niveau du load balancer, le trafic entre celui-ci et les serveurs web est non chiffré, ce qui augmente les risques d’attaques.
--   **Solution** : Activer un chiffrement **de bout en bout** en configurant le SSL sur les serveurs web.
+**Only one MySQL server accepts writes**
 
-**Un seul serveur MySQL accepte les écritures**
+- **Issue**:
+  - The Primary node is a single point of failure. If it fails, no writes can be performed until a new Primary node is designated.
+- **Solution**:
+  - Implement a multi-primary cluster or a distributed database to avoid this deadlock.
 
--   **Problème** : Le nœud Primary est un point de défaillance unique. S’il tombe en panne, aucune écriture ne peut être effectuée jusqu’à ce qu’un nouveau Primary soit désigné.
--   **Solution** : Mettre en place un cluster multi-primary ou une base de données distribuée pour éviter ce blocage.
+**All servers have the same components**
 
-**Tous les serveurs ont les mêmes composants**
-
--   **Problème** : Si chaque serveur exécute la base de données, le serveur web et l’application, une panne d’un seul service peut affecter l’ensemble du serveur.
--   **Solution** : Séparer les composants
+- **Problem**: 
+  - If each server runs the database, the web server, and the application, a failure of a single service can affect the entire server.
+- **Solution**: 
+  - Separate the components
