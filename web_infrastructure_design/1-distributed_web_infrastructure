@@ -1,9 +1,8 @@
 
-![Simple web stack](simple-web-stack.png)
+![Distributed-web-infrastructure](Distributed-web-infrastructure.png)
 
 
 ## **Explanation of Additional Elements**
-
   
 **Why add 2 servers ?**  
 - `Better load distribution` thanks to a load balancer that prevents overloading a single server.
@@ -86,4 +85,5 @@ SPOF (Single Point of Failure)
 - Redundant Load Balancers to avoid critical SPOF.
 
 - TLS/SSL encryption to secure communications.
+
 - Monitoring tools to track system status.

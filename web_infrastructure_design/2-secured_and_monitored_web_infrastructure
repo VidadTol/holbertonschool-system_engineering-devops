@@ -1,27 +1,32 @@
 
 ![web_infrastructure_design](Secured-and-monitored-web-infrastructure.png)
 
+
 ### **Explication des éléments supplémentaires**
 
-**Pourquoi ajouter des firewalls ?** Les firewalls permettent de :
+**Pourquoi ajouter des firewalls ?**    
+  Les firewalls permettent de :
 
 -   Restreindre l’accès non autorisé aux serveurs.
 -   Filtrer le trafic entrant et sortant selon des règles de sécurité.
 -   Protéger contre les attaques telles que DDoS, brute force et intrusions.
 
-**Pourquoi servir le trafic en HTTPS ?** HTTPS chiffre les données échangées entre l’utilisateur et le serveur, garantissant :
+**Pourquoi servir le trafic en HTTPS ?**   
+HTTPS chiffre les données échangées entre l’utilisateur et le serveur, garantissant :
 
 -   **Confidentialité** : les données ne peuvent pas être interceptées ou lues par des attaquants.
 -   **Intégrité** : les informations ne peuvent pas être altérées lors de la transmission.
 -   **Authentification** : les utilisateurs peuvent vérifier l’identité du serveur.
 
-**Pourquoi ajouter des clients de monitoring ?** Les agents de monitoring collectent des données pour :
+**Pourquoi ajouter des clients de monitoring ?**   
+Les agents de monitoring collectent des données pour :
 
 -   Suivre la performance des serveurs (CPU, mémoire, utilisation du disque).
 -   Détecter et résoudre les problèmes comme les pics de trafic ou les pannes.
 -   Offrir des analyses pour optimiser et faire évoluer l’infrastructure.
 
-**Comment l’outil de monitoring collecte-t-il les données ?** Les agents de monitoring (ex. Sumologic) recueillent des métriques des serveurs et les envoient à un service centralisé. Ces données sont ensuite affichées sur des tableaux de bord pour analyse.
+**Comment l’outil de monitoring collecte-t-il les données ?**  
+Les agents de monitoring (ex. Sumologic) recueillent des métriques des serveurs et les envoient à un service centralisé. Ces données sont ensuite affichées sur des tableaux de bord pour analyse.
 
 **Comment surveiller le QPS (Queries Per Second) d’un serveur web ?**
 
@@ -38,10 +43,10 @@
 
 **Un seul serveur MySQL accepte les écritures**
 
--   **Problème** : Le nœud Primary est un **point de défaillance unique**. S’il tombe en panne, aucune écriture ne peut être effectuée jusqu’à ce qu’un nouveau Primary soit désigné.
--   **Solution** : Mettre en place un **cluster multi-primary** ou une **base de données distribuée** pour éviter ce blocage.
+-   **Problème** : Le nœud Primary est un point de défaillance unique. S’il tombe en panne, aucune écriture ne peut être effectuée jusqu’à ce qu’un nouveau Primary soit désigné.
+-   **Solution** : Mettre en place un cluster multi-primary ou une base de données distribuée pour éviter ce blocage.
 
 **Tous les serveurs ont les mêmes composants**
 
--   **Problème** : Si chaque serveur exécute **la base de données, le serveur web et l’application**, une panne d’un seul service peut affecter l’ensemble du serveur.
--   **Solution** : **Séparer les composants**
+-   **Problème** : Si chaque serveur exécute la base de données, le serveur web et l’application, une panne d’un seul service peut affecter l’ensemble du serveur.
+-   **Solution** : Séparer les composants
